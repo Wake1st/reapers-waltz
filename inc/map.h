@@ -1,6 +1,7 @@
 #ifndef MAP
 #define MAP
 
+#include <cstdio>
 #include <vector>
 #include "raylib.h"
 

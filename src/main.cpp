@@ -3,6 +3,7 @@
 #include "test_movement.h"
 #include "test_map.h"
 #include "test_collisions.h"
+#include "test_animations.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -17,7 +18,7 @@ int main(void)
   InitWindow(screenWidth, screenHeight, "Reapers Waltz");
   SetWindowMonitor(0);
 
-  Texture2D playerTexture = LoadTexture("resources/raylib_logo.png"); // Texture loading
+  Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png"); // Texture loading
 
   SetTargetFPS(FRAME_RATE); // Set our game to run at 60 frames-per-second
   //---------------------------------------------------------------------------------------
@@ -27,12 +28,15 @@ int main(void)
   //   wallTexture : playerTexture,
   //   floorTexture : playerTexture,
   // }});
-  TestCollisions *test = new TestCollisions(TestCollisionsResources{
+  // TestCollisions *test = new TestCollisions(TestCollisionsResources{
+  //   playerTexture : playerTexture,
+  //   mapRes : MapResources{
+  //     wallTexture : playerTexture,
+  //     floorTexture : playerTexture,
+  //   }
+  // });
+  TestAnimations *test = new TestAnimations(TestAnimationResources{
     playerTexture : playerTexture,
-    mapRes : MapResources{
-      wallTexture : playerTexture,
-      floorTexture : playerTexture,
-    }
   });
 
   // Main game loop

@@ -26,8 +26,9 @@ public:
     currentCell = startCell;
 
     texture = text;
+
     position = {(startCell % MAP_WIDTH) * CELL_SIZE, (startCell / MAP_WIDTH) * CELL_SIZE};
-    frameRec = {0.0f, 0.0f, (float)texture.width / 6, (float)texture.height};
+    frameRec = {0.0f, 0.0f, (float)texture.width / FRAMES, (float)texture.height / LAYERS};
     currentFrame = 0;
     framesCounter = 0;
     framesSpeed = FRAME_SPEED;
@@ -38,6 +39,7 @@ public:
 
 private:
   Texture2D texture;
+  unsigned int nextFrameOffset;
 
   Rectangle frameRec;
   int currentLayer;
@@ -98,30 +100,32 @@ void Actor::move(Command *command)
   position += Vector2Scale(direction, SPEED * GetFrameTime());
 
   // update current cell
-  currentCell = (int)floor(position.x / CELL_SIZE) + (int)floor(position.y / CELL_SIZE * MAP_WIDTH);
+  Vector2 center = {(position.x + HALF_CELL), (position.y + HALF_CELL)};
+  currentCell = (int)floor(center.x / CELL_SIZE) + (int)floor(center.y / CELL_SIZE) * MAP_WIDTH;
 }
 
 void Actor::draw()
 {
-  DrawRectangle(position.x, position.y, CELL_SIZE, CELL_SIZE, BLUE);
-  // DrawTextureRec(texture, frameRec, position, WHITE);
+  DrawTextureRec(texture, frameRec, position, WHITE);
+
+  DrawText(TextFormat("pos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell), 20, 20, 40, BLACK);
 }
 
 void Actor::animate()
 {
-  // framesCounter++;
+  framesCounter++;
+  if (framesCounter >= (FRAME_RATE / framesSpeed))
+  {
+    currentFrame++;
+    framesCounter = 0;
+    if (currentFrame >= FRAMES)
+    {
+      currentFrame = 0;
+    }
 
-  // if (framesCounter >= (FRAME_RATE / framesSpeed))
-  // {
-  //   framesCounter = 0;
-  //   currentFrame++;
-
-  //   if (currentFrame >= FRAMES)
-  //     currentFrame = 0;
-
-  //   frameRec.x = (float)currentFrame * (float)texture.width / FRAMES;
-  //   frameRec.y = (float)currentLayer * (float)texture.height / LAYERS;
-  // }
+    frameRec.x = (float)currentFrame * (float)texture.width / FRAMES;
+    // frameRec.y = (float)currentLayer * (float)texture.height / LAYERS;
+  }
 }
 
 #endif
