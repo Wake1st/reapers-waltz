@@ -17,7 +17,7 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
     - [ ] animations
   - [x] collisions
     - [x] walls
-    - [ ] traps
+    - [x] triggers
   - [ ] sounds
   - [ ] levels
     - [ ] exit
@@ -34,7 +34,7 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
   - [x] floor
 - [x] collisions
   - [x] walls
-  - [ ] traps
+  - [x] triggers
   - [ ] enemy
   - [ ] dialogue
   - [ ] orbs
@@ -43,7 +43,7 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
   - [ ] sfx
 - [ ] vfx
   - [ ] particles
-- [ ] levels
+- [ ] level
   - [ ] loading
   - [ ] death record
   - [ ] win state
@@ -54,11 +54,13 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
   - [ ] pause
   - [ ] dialogue
   - [ ] tapestry of death
+- [ ] cutscene
 
 
 ## Schedule
 
 - [x] Day 1: character movement, tiles, rooms, map, collisions
-- [ ] Day 2: collisions, enemy AI, enemies, sounds, publish itch
-- [ ] Day 3: fail, levels, UI
+- [x] Day 2: collisions, animations
+- [ ] Day 3: triggers, fail, UI, level, enemy AI, enemies, sounds, publish itch
 - [ ] Day 4: achievements, scene swapping, dungeon generator
+- [ ] Day 5: cutscene

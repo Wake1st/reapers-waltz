@@ -108,7 +108,7 @@ void Actor::draw()
 {
   DrawTextureRec(texture, frameRec, position, WHITE);
 
-  DrawText(TextFormat("pos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell), 20, 20, 40, BLACK);
+  DrawText(TextFormat("pos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell), 20, 20, 40, WHITE);
 }
 
 void Actor::animate()

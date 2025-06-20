@@ -4,6 +4,7 @@
 #include "test_map.h"
 #include "test_collisions.h"
 #include "test_animations.h"
+#include "test_triggers.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -35,8 +36,11 @@ int main(void)
   //     floorTexture : playerTexture,
   //   }
   // });
-  TestAnimations *test = new TestAnimations(TestAnimationResources{
-    playerTexture : playerTexture,
+  // TestAnimations *test = new TestAnimations(TestAnimationResources{
+  //   playerTexture : playerTexture,
+  // });
+  TestTriggers *test = new TestTriggers(TestTriggersResources{
+    texture : playerTexture,
   });
 
   // Main game loop
