@@ -15,7 +15,7 @@ public:
     cell = cellIndex;
     position = {(cellIndex % MAP_WIDTH) * CELL_SIZE, (cellIndex / MAP_WIDTH) * CELL_SIZE};
   }
-  void activate();
+  void activate(bool value);
   void draw();
 
 private:
@@ -23,9 +23,9 @@ private:
   Vector2 position;
 };
 
-void Trigger::activate()
+void Trigger::activate(bool value)
 {
-  active = true;
+  active = value;
 }
 
 void Trigger::draw()

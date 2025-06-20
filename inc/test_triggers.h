@@ -18,7 +18,7 @@ public:
   TestTriggers(TestTriggersResources res)
   {
     input = new InputHandler();
-    actor = new Actor(res.texture, 0);
+    actor = new Actor(res.texture, 12 + 12 * MAP_WIDTH);
 
     triggers = {
         {4 + 4 * MAP_WIDTH, new Trigger(4 + 4 * MAP_WIDTH)},
@@ -46,10 +46,7 @@ void TestTriggers::update()
   // check for triggers
   for (const auto &[cell, trigger] : triggers)
   {
-    if (actor->currentCell == cell)
-    {
-      trigger->activate();
-    }
+    trigger->activate(actor->currentCell == cell);
   }
 
   actor->update();

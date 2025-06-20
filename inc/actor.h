@@ -1,6 +1,7 @@
 #ifndef ACTOR
 #define ACTOR
 
+#include <iostream>
 #include <cmath>
 #include "raylib.h"
 #include "raymath.h"
@@ -26,10 +27,12 @@ public:
     currentCell = startCell;
 
     texture = text;
+    offset = {24.f, 80.f};
 
     position = {(startCell % MAP_WIDTH) * CELL_SIZE, (startCell / MAP_WIDTH) * CELL_SIZE};
     frameRec = {0.0f, 0.0f, (float)texture.width / FRAMES, (float)texture.height / LAYERS};
     currentFrame = 0;
+    currentLayer = 1;
     framesCounter = 0;
     framesSpeed = FRAME_SPEED;
   }
@@ -39,7 +42,7 @@ public:
 
 private:
   Texture2D texture;
-  unsigned int nextFrameOffset;
+  Vector2 offset;
 
   Rectangle frameRec;
   int currentLayer;
@@ -52,18 +55,25 @@ private:
 
 void Actor::update()
 {
+  // stand still when motionless
   Actor::animate();
+
+  // reset for next frame
+  isMoving = false;
 }
 
 void Actor::move(Command *command)
 {
+  // we are now in motion
+  isMoving = true;
+
   // update position
   Vector2 direction = (Vector2){0.f, 0.f};
   switch (*command)
   {
   case Command::N:
     direction += (Vector2){0.f, -1.f};
-    currentLayer = 0;
+    currentLayer = 3;
     break;
   case Command::NE:
     direction += (Vector2){DIAGONAL, -DIAGONAL};
@@ -71,27 +81,27 @@ void Actor::move(Command *command)
     break;
   case Command::E:
     direction += (Vector2){1.f, 0.f};
-    currentLayer = 3;
+    currentLayer = 2;
     break;
   case Command::SE:
     direction += (Vector2){DIAGONAL, DIAGONAL};
-    currentLayer = 3;
+    currentLayer = 0;
     break;
   case Command::S:
     direction += (Vector2){0.f, 1.f};
-    currentLayer = 1;
+    currentLayer = 0;
     break;
   case Command::SW:
     direction += (Vector2){-DIAGONAL, DIAGONAL};
-    currentLayer = 2;
+    currentLayer = 0;
     break;
   case Command::W:
     direction += (Vector2){-1.f, 0.f};
-    currentLayer = 2;
+    currentLayer = 1;
     break;
   case Command::NW:
     direction += (Vector2){-DIAGONAL, -DIAGONAL};
-    currentLayer = 2;
+    currentLayer = 3;
     break;
   default:
     return;
@@ -106,26 +116,37 @@ void Actor::move(Command *command)
 
 void Actor::draw()
 {
-  DrawTextureRec(texture, frameRec, position, WHITE);
+  DrawTextureRec(texture, frameRec, position - offset, WHITE);
+  DrawRectangleLines(position.x, position.y, CELL_SIZE, CELL_SIZE, LIME);
 
   DrawText(TextFormat("pos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell), 20, 20, 40, WHITE);
 }
 
 void Actor::animate()
 {
-  framesCounter++;
-  if (framesCounter >= (FRAME_RATE / framesSpeed))
+  // only animate when in motion
+  if (isMoving)
   {
-    currentFrame++;
-    framesCounter = 0;
-    if (currentFrame >= FRAMES)
+    // move with the flow
+    framesCounter++;
+    if (framesCounter >= (FRAME_RATE / framesSpeed))
     {
-      currentFrame = 0;
+      currentFrame++;
+      framesCounter = 0;
+      if (currentFrame >= FRAMES)
+      {
+        currentFrame = 0;
+      }
     }
-
-    frameRec.x = (float)currentFrame * (float)texture.width / FRAMES;
-    // frameRec.y = (float)currentLayer * (float)texture.height / LAYERS;
   }
+  else
+  {
+    currentFrame = 0;
+  }
+
+  // anways update animation rect
+  frameRec.x = (float)currentFrame * (float)texture.width / FRAMES;
+  frameRec.y = (float)currentLayer * (float)texture.height / LAYERS;
 }
 
 #endif
