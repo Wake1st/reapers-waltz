@@ -22,10 +22,11 @@ public:
   int currentCell;
   Vector2 position;
 
-  Actor(Texture2D text, int startCell)
+  Actor(Texture2D text, int startCell, float spd = SPEED)
   {
     isMoving = false;
     currentCell = startCell;
+    speed = spd;
 
     texture = text;
     offset = {24.f, 80.f};
@@ -46,6 +47,7 @@ public:
 private:
   Texture2D texture;
   Vector2 offset;
+  float speed;
 
   Rectangle frameRec;
   int currentLayer;
@@ -116,7 +118,7 @@ void Actor::move(Command *command)
     return;
   }
 
-  position += Vector2Scale(direction, SPEED * GetFrameTime());
+  position += Vector2Scale(direction, speed * GetFrameTime());
 
   // update current cell
   Vector2 center = {(position.x + HALF_CELL), (position.y + HALF_CELL)};

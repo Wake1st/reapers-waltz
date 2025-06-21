@@ -28,7 +28,7 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
   - [x] action    | x
 - [x] actors
   - [x] player
-  - [ ] enemy
+  - [x] enemy
 - [x] map
   - [x] generate walls
   - [x] floor
@@ -62,5 +62,5 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
 - [x] Day 1: character movement, tiles, rooms, map, collisions
 - [x] Day 2: collisions, animations
 - [x] Day 3: triggers, death
-- [ ] Day 4: traps, UI, level, enemy AI, enemies, sounds, publish itch
+- [ ] Day 4: traps, enemy AI, sounds, UI, level, publish itch
 - [ ] Day 5: cutscene, achievements, scene swapping, dungeon generator

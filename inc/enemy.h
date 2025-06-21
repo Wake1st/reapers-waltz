@@ -11,7 +11,9 @@
 #define IDLE_TIME 2.5
 
 #define PURSUE_DISTANCE 300.f
-#define CAUGHT_DISTANCE 40.f
+#define CAUGHT_DISTANCE 30.f
+
+#define ENEMY_SPEED 85.f
 
 typedef enum EnemyState
 {
@@ -26,12 +28,15 @@ public:
   Enemy(Texture2D texture, int startCell, std::vector<int> points)
   {
     patrolPoints = points;
-    actor = new Actor(texture, startCell);
+    actor = new Actor(texture, startCell, ENEMY_SPEED);
 
     state = EnemyState::IDLE;
     idleTimer = IDLE_TIME;
   }
-  void checkPursuit(Actor *check);
+  void setCell(int cell);
+  void setState(EnemyState st);
+  bool inPursuit();
+  bool checkPursuit(Actor *check);
   bool checkCaught();
   void update();
   void draw();
@@ -50,25 +55,39 @@ private:
   Command getCommand();
 };
 
-void Enemy::checkPursuit(Actor *check)
+bool Enemy::inPursuit()
+{
+  return state == EnemyState::PURSUIT;
+}
+
+void Enemy::setCell(int cell)
+{
+  actor->setCell(cell);
+}
+
+void Enemy::setState(EnemyState st)
+{
+  state = st;
+}
+
+bool Enemy::checkPursuit(Actor *check)
 {
   if (Vector2Distance(actor->position, check->position) < PURSUE_DISTANCE)
   {
     targetCell = check->currentCell;
     target = PositionOfCell(targetCell);
     state = EnemyState::PURSUIT;
+    return true;
   }
-  else
-  {
-    state = EnemyState::IDLE;
-  }
+
+  return false;
 }
 
 bool Enemy::checkCaught()
 {
   if (Vector2Distance(actor->position, target) < CAUGHT_DISTANCE)
   {
-    EnemyState::IDLE;
+    state = EnemyState::IDLE;
     return true;
   }
 
@@ -77,6 +96,8 @@ bool Enemy::checkCaught()
 
 void Enemy::update()
 {
+  // printf(TextFormat("\t\treading state: %i", state));
+
   switch (state)
   {
   case EnemyState::IDLE:
@@ -95,12 +116,15 @@ void Enemy::update()
 
       // update state
       state = EnemyState::PATROL;
+      // printf(TextFormat("\n\n -- setting state: %i", state));
     }
 
     break;
   }
   case EnemyState::PATROL:
   {
+    // printf(TextFormat("\n\n - patrolling"));
+
     // move and check destination
     Command command = getCommand();
     if (command)
@@ -135,9 +159,9 @@ void Enemy::draw()
 {
   actor->draw();
 
-  // DrawText(TextFormat("state: %i", state), 20, 100, 20, WHITE);
-  // DrawText(TextFormat("target x: %f\ttarget y: %f", target.x, target.y), 20, 140, 20, WHITE);
-  // DrawText(TextFormat("actor: %i\ttarget: %i", actor->currentCell, targetCell), 20, 180, 20, WHITE);
+  DrawText(TextFormat("state: %i", state), 20, 100, 20, WHITE);
+  DrawText(TextFormat("target x: %f\ttarget y: %f", target.x, target.y), 20, 140, 20, WHITE);
+  DrawText(TextFormat("actor: %i\ttarget: %i", actor->currentCell, targetCell), 20, 180, 20, WHITE);
 }
 
 Command Enemy::getCommand()

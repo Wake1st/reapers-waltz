@@ -5,6 +5,7 @@
 #include "raylib.h"
 
 #include "globals.h"
+#include "game_state.h"
 #include "enemy.h"
 
 typedef struct TestEnemyResources
@@ -45,13 +46,50 @@ private:
 
 void TestEnemy::update()
 {
-  Command command = input->handleInput();
-  if (command)
+  // printf("\nupdate...");
+  if (GameState::active == GameStates::DEATH)
   {
-    player->move(&command);
+    // reset actors
+    player->setCell(18 + 26 * MAP_WIDTH);
+    enemy->setCell(5 + 5 * MAP_WIDTH);
+
+    // update state
+    GameState::setState(GameStates::PLAY);
+    player->isFrozen = false;
+  }
+  else if (GameState::active == GameStates::PLAY)
+  {
+    // move the player
+    Command command = input->handleInput();
+    if (command)
+    {
+      // printf("\n - - commanded");
+      player->move(&command);
+    }
+
+    // check for death or detection
+    if (enemy->inPursuit())
+    {
+      if (enemy->checkCaught())
+      {
+        // printf("\n - - caught");
+        GameState::active = GameStates::DEATH;
+        player->isFrozen = true;
+      }
+      else if (!enemy->checkPursuit(player))
+      {
+        enemy->setState(EnemyState::IDLE);
+      }
+    }
+    else
+    {
+      enemy->checkPursuit(player);
+    }
+
+    player->update();
   }
 
-  player->update();
+  // printf("\n - - enemy update");
   enemy->update();
 }
 
