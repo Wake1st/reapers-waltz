@@ -30,7 +30,7 @@ public:
     texture = text;
     offset = {24.f, 80.f};
 
-    position = {(startCell % MAP_WIDTH) * CELL_SIZE, (startCell / MAP_WIDTH) * CELL_SIZE};
+    position = PositionOfCell(startCell);
     frameRec = {0.0f, 0.0f, (float)texture.width / FRAMES, (float)texture.height / LAYERS};
     currentFrame = 0;
     currentLayer = 1;
@@ -68,7 +68,7 @@ void Actor::update()
 void Actor::setCell(int cell)
 {
   currentCell = cell;
-  position = {(cell % MAP_WIDTH) * CELL_SIZE, (cell / MAP_WIDTH) * CELL_SIZE};
+  position = PositionOfCell(cell);
 }
 
 void Actor::move(Command *command)

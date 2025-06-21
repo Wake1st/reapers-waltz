@@ -29,4 +29,9 @@ typedef enum Command
   ACTION,
 } Command;
 
+Vector2 PositionOfCell(int cell)
+{
+  return {(cell % MAP_WIDTH) * CELL_SIZE, (cell / MAP_WIDTH) * CELL_SIZE};
+}
+
 #endif

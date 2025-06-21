@@ -24,7 +24,7 @@ public:
     tiles = std::vector<Tile *>();
     for (int i = 0; i < MAP_SIZE; i++)
     {
-      Vector2 position = (Vector2){(i % MAP_WIDTH) * CELL_SIZE, (i / MAP_WIDTH) * CELL_SIZE};
+      Vector2 position = PositionOfCell(i);
       tiles.push_back(new Tile(position));
     }
 

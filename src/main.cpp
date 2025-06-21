@@ -6,6 +6,7 @@
 #include "test_animations.h"
 #include "test_death.h"
 #include "test_audio.h"
+#include "test_enemy.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -55,11 +56,15 @@ int main(void)
   //   playerTexture : playerTexture,
   //   crushyStoneTexture : crushyStoneTexture,
   // });
-  TestAudio *test = new TestAudio(TestAudioResources{
-    crushed : crushWav,
-    spiked : spikeWav,
-    death : deathWav,
-    footsteps : stepsWav,
+  // TestAudio *test = new TestAudio(TestAudioResources{
+  //   crushed : crushWav,
+  //   spiked : spikeWav,
+  //   death : deathWav,
+  //   footsteps : stepsWav,
+  // });
+  TestEnemy *test = new TestEnemy(TestEnemyResources{
+    enemyTexture : playerTexture,
+    playerTexture : playerTexture,
   });
 
   // Main game loop

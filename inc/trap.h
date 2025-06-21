@@ -14,7 +14,7 @@ public:
   {
     texture = text;
     cell = cellIndex;
-    position = {(cellIndex % MAP_WIDTH) * CELL_SIZE, (cellIndex / MAP_WIDTH) * CELL_SIZE};
+    position = PositionOfCell(cellIndex);
   }
   void activate(bool value);
   void update();
