@@ -4,7 +4,7 @@
 #include "test_map.h"
 #include "test_collisions.h"
 #include "test_animations.h"
-#include "test_triggers.h"
+// #include "test_death.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -19,12 +19,14 @@ int main(void)
   InitWindow(screenWidth, screenHeight, "Reapers Waltz");
   SetWindowMonitor(0);
 
-  Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png"); // Texture loading
+  // Texture loading
+  Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png");
+  Texture2D crushyStoneTexture = LoadTexture("resources/Crushy Crushy Stone.png");
 
   SetTargetFPS(FRAME_RATE); // Set our game to run at 60 frames-per-second
   //---------------------------------------------------------------------------------------
 
-  // TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
+  TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
   // TestMap *test = new TestMap(TestMapResources{mapRes : MapResources{
   //   wallTexture : playerTexture,
   //   floorTexture : playerTexture,
@@ -39,9 +41,13 @@ int main(void)
   // TestAnimations *test = new TestAnimations(TestAnimationResources{
   //   playerTexture : playerTexture,
   // });
-  TestTriggers *test = new TestTriggers(TestTriggersResources{
-    texture : playerTexture,
-  });
+  // TestTriggers *test = new TestTriggers(TestTriggersResources{
+  //   texture : playerTexture,
+  // });
+  // TestDeath *test = new TestDeath(TestDeathResources{
+  //   playerTexture : playerTexture,
+  //   crushyStoneTexture: crushyStoneTexture,
+  // });
 
   // Main game loop
   while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -64,7 +70,9 @@ int main(void)
 
   // De-Initialization
   //--------------------------------------------------------------------------------------
-  UnloadTexture(playerTexture); // Texture unloading
+  // Texture unloading
+  UnloadTexture(playerTexture);
+  UnloadTexture(crushyStoneTexture);
 
   CloseWindow(); // Close window and OpenGL context
   //--------------------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 
 #define SPEED 115.f
 
-#define FRAME_SPEED 8
+#define FRAME_SPEED 4
 #define FRAMES 4
 #define LAYERS 4
 
@@ -18,6 +18,7 @@ class Actor
 {
 public:
   bool isMoving;
+  bool isFrozen;
   int currentCell;
   Vector2 position;
 
@@ -38,6 +39,7 @@ public:
   }
   void update();
   void move(Command *command);
+  bool canMove();
   void draw();
 
 private:
@@ -147,6 +149,11 @@ void Actor::animate()
   // anways update animation rect
   frameRec.x = (float)currentFrame * (float)texture.width / FRAMES;
   frameRec.y = (float)currentLayer * (float)texture.height / LAYERS;
+}
+
+bool Actor::canMove()
+{
+  return !isFrozen;
 }
 
 #endif
