@@ -5,6 +5,7 @@
 #include "test_collisions.h"
 #include "test_animations.h"
 #include "test_death.h"
+#include "test_audio.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -17,13 +18,22 @@ int main(void)
   const int screenHeight = 850;
 
   InitWindow(screenWidth, screenHeight, "Reapers Waltz");
+  InitAudioDevice();
+
   SetWindowMonitor(0);
 
-  // Texture loading
+  // Resource loading
   Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png");
   Texture2D crushyStoneTexture = LoadTexture("resources/Crushy Crushy Stone.png");
 
-  SetTargetFPS(FRAME_RATE); // Set our game to run at 60 frames-per-second
+  Sound crushWav = LoadSound("resources/ISEKAI - CRUSHER.wav");
+  Sound spikeWav = LoadSound("resources/ISEKAI - SPIKES.wav");
+  Sound deathWav = LoadSound("resources/ISEKAI - Death.wav");
+  Sound stepsWav = LoadSound("resources/ISEKAI - FOOTSTEPS.wav");
+
+  // Set our game to run at 60 frames-per-second
+  SetTargetFPS(FRAME_RATE);
+
   //---------------------------------------------------------------------------------------
 
   // TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
@@ -41,9 +51,15 @@ int main(void)
   // TestAnimations *test = new TestAnimations(TestAnimationResources{
   //   playerTexture : playerTexture,
   // });
-  TestDeath *test = new TestDeath(TestDeathResources{
-    playerTexture : playerTexture,
-    crushyStoneTexture : crushyStoneTexture,
+  // TestDeath *test = new TestDeath(TestDeathResources{
+  //   playerTexture : playerTexture,
+  //   crushyStoneTexture : crushyStoneTexture,
+  // });
+  TestAudio *test = new TestAudio(TestAudioResources{
+    crushed : crushWav,
+    spiked : spikeWav,
+    death : deathWav,
+    footsteps : stepsWav,
   });
 
   // Main game loop
@@ -67,11 +83,19 @@ int main(void)
 
   // De-Initialization
   //--------------------------------------------------------------------------------------
-  // Texture unloading
+  // Resource unloading
   UnloadTexture(playerTexture);
   UnloadTexture(crushyStoneTexture);
 
-  CloseWindow(); // Close window and OpenGL context
+  UnloadSound(crushWav);
+  UnloadSound(spikeWav);
+  UnloadSound(deathWav);
+  UnloadSound(stepsWav);
+
+  // Close window and OpenGL context
+  CloseAudioDevice();
+
+  CloseWindow();
   //--------------------------------------------------------------------------------------
 
   return 0;
