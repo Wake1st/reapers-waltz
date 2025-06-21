@@ -1,87 +1,94 @@
-// #ifndef TEST_DEATH
-// #define TEST_DEATH
+#ifndef TEST_DEATH
+#define TEST_DEATH
 
-// #include <map>
-// #include "raylib.h"
+#include <iostream>
+#include "raylib.h"
 
-// #include "game_state.h"
-// #include "input.h"
-// #include "actor.h"
-// #include "trap.h"
+#include "game_state.h"
+#include "input.h"
+#include "actor.h"
+#include "trap.h"
 
-// typedef struct TestDeathResources
-// {
-//   Texture2D playerTexture;
-//   Texture2D crushyStoneTexture;
-// } TestDeathResources;
+#define TRAP_COUNT 3
+#define ACTOR_START (4 + 10 * MAP_WIDTH)
 
-// class TestDeath
-// {
-// public:
-//   TestDeath(TestDeathResources res)
-//   {
-//     actor = new Actor(res.playerTexture, 4 + 4 * MAP_WIDTH);
-//     input = new InputHandler();
+typedef struct TestDeathResources
+{
+  Texture2D playerTexture;
+  Texture2D crushyStoneTexture;
+} TestDeathResources;
 
-//     traps = {
-//         {4 + 5 * MAP_WIDTH, new Trap(res.crushyStoneTexture, 4 + 5 * MAP_WIDTH)},
-//         {6 + 8 * MAP_WIDTH, new Trap(res.crushyStoneTexture, 6 + 8 * MAP_WIDTH)},
-//         {8 + 11 * MAP_WIDTH, new Trap(res.crushyStoneTexture, 8 + 11 * MAP_WIDTH)},
-//     };
-//   }
+class TestDeath
+{
+public:
+  TestDeath(TestDeathResources res)
+  {
+    input = new InputHandler();
+    actor = new Actor(res.playerTexture, ACTOR_START);
 
-//   void update();
-//   void draw();
+    traps[0] = new Trap(res.crushyStoneTexture, 4 + 4 * MAP_WIDTH);
+    traps[1] = new Trap(res.crushyStoneTexture, 8 + 4 * MAP_WIDTH);
+    traps[2] = new Trap(res.crushyStoneTexture, 12 + 4 * MAP_WIDTH);
+  }
 
-// private:
-//   InputHandler *input;
-//   Actor *actor;
+  void update();
+  void draw();
 
-//   std::map<int, Trap * trap> traps;
-// };
+private:
+  InputHandler *input;
+  Actor *actor;
 
-// void TestDeath::update()
-// {
-//   if (GameState::active == GameStates::DEATH)
-//   {
-//     // create new actor
-//     actor = new Actor(res.playerTexture, 4 + 4 * MAP_WIDTH);
+  Trap *traps[TRAP_COUNT];
+};
 
-//     // reset traps
-//     for (const auto &pair : traps)
-//     {
-//       pair.second->activate(false);
-//     }
-//   }
+void TestDeath::update()
+{
+  if (GameState::active == GameStates::DEATH)
+  {
+    // create new actor
+    actor->setCell(ACTOR_START);
 
-//   Command command = input->handleInput();
-//   if (command && !actor->canMove())
-//   {
-//     actor->move(&command);
-//   }
+    // reset traps
+    for (int i = 0; i < TRAP_COUNT; i++)
+    {
+      traps[i]->activate(false);
+    }
 
-//   // check for traps
-//   for (const auto &[cell, trap] : traps)
-//   {
-//     if (actor->currentCell == cell)
-//     {
-//       GameState::setState(GameStates::DEATH);
-//       trap->activate();
-//       actor->isFrozen = true;
-//     }
-//   }
+    // update state
+    GameState::setState(GameStates::PLAY);
+    actor->isFrozen = false;
+  }
+  else if (GameState::active == GameStates::PLAY)
+  {
+    Command command = input->handleInput();
+    if (command && actor->canMove())
+    {
+      actor->move(&command);
+    }
 
-//   actor->update();
-// }
+    // check for traps
+    for (int i = 0; i < TRAP_COUNT; i++)
+    {
+      if (actor->currentCell == traps[i]->cell)
+      {
+        GameState::setState(GameStates::DEATH);
+        traps[i]->activate(true);
+        actor->isFrozen = true;
+      }
+    }
 
-// void TestDeath::draw()
-// {
-//   actor->draw();
+    actor->update();
+  }
+}
 
-//   for (const auto &pair : traps)
-//   {
-//     pair.second->draw();
-//   }
-// }
+void TestDeath::draw()
+{
+  actor->draw();
 
-// #endif
+  for (int i = 0; i < TRAP_COUNT; i++)
+  {
+    traps[i]->draw();
+  }
+}
+
+#endif

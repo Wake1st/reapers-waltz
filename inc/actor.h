@@ -38,6 +38,7 @@ public:
     framesSpeed = FRAME_SPEED;
   }
   void update();
+  void setCell(int cell);
   void move(Command *command);
   bool canMove();
   void draw();
@@ -62,6 +63,12 @@ void Actor::update()
 
   // reset for next frame
   isMoving = false;
+}
+
+void Actor::setCell(int cell)
+{
+  currentCell = cell;
+  position = {(cell % MAP_WIDTH) * CELL_SIZE, (cell / MAP_WIDTH) * CELL_SIZE};
 }
 
 void Actor::move(Command *command)

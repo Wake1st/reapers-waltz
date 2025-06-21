@@ -19,10 +19,16 @@ class GameState
 public:
   static GameStates active;
 
-  static setState(GameStates state)
+  static void setState(GameStates state)
   {
     active = state;
   }
-}
+
+private:
+  GameState() = delete;
+  ~GameState() = delete;
+};
+
+GameStates GameState::active = GameStates::PLAY;
 
 #endif

@@ -4,7 +4,7 @@
 #include "test_map.h"
 #include "test_collisions.h"
 #include "test_animations.h"
-// #include "test_death.h"
+#include "test_death.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -26,7 +26,7 @@ int main(void)
   SetTargetFPS(FRAME_RATE); // Set our game to run at 60 frames-per-second
   //---------------------------------------------------------------------------------------
 
-  TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
+  // TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
   // TestMap *test = new TestMap(TestMapResources{mapRes : MapResources{
   //   wallTexture : playerTexture,
   //   floorTexture : playerTexture,
@@ -41,13 +41,10 @@ int main(void)
   // TestAnimations *test = new TestAnimations(TestAnimationResources{
   //   playerTexture : playerTexture,
   // });
-  // TestTriggers *test = new TestTriggers(TestTriggersResources{
-  //   texture : playerTexture,
-  // });
-  // TestDeath *test = new TestDeath(TestDeathResources{
-  //   playerTexture : playerTexture,
-  //   crushyStoneTexture: crushyStoneTexture,
-  // });
+  TestDeath *test = new TestDeath(TestDeathResources{
+    playerTexture : playerTexture,
+    crushyStoneTexture : crushyStoneTexture,
+  });
 
   // Main game loop
   while (!WindowShouldClose()) // Detect window close button or ESC key

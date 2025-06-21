@@ -8,6 +8,8 @@
 class Trap
 {
 public:
+  int cell;
+
   Trap(Texture2D text, int cellIndex)
   {
     texture = text;
@@ -21,7 +23,6 @@ public:
 private:
   Texture2D texture;
   Vector2 position;
-  int cell;
 
   bool isActive;
 };
