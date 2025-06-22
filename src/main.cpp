@@ -18,9 +18,8 @@ int main(void)
   // Initialization
   //--------------------------------------------------------------------------------------
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Reapers Waltz");
-  InitAudioDevice();
-
   SetWindowMonitor(0);
+  InitAudioDevice();
 
   // Resource loading
   Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png");
@@ -41,12 +40,10 @@ int main(void)
   Vector2 playerStart = PositionOfCell(startCell);
 
   Camera2D camera = {0};
-  camera.target = (Vector2){playerStart.x, playerStart.y};
+  camera.target = playerStart;
   camera.offset = (Vector2){SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
-
-  RenderTexture screenCamera = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
 
   // TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
   // TestMap *test = new TestMap(TestMapResources{mapRes : MapResources{
@@ -90,29 +87,22 @@ int main(void)
     //----------------------------------------------------------------------------------
     test->update();
 
+    camera.offset = (Vector2){SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f};
     camera.target = test->getPlayerPosition();
 
     // Draw
     //----------------------------------------------------------------------------------
-
-    BeginTextureMode(screenCamera);
-    ClearBackground(BLACK);
-
-    BeginMode2D(camera);
-
-    test->draw2D();
-
-    EndMode2D();
-
-    DrawText(TextFormat("target X: %f\ttarget Y: %f", camera.target.x, camera.target.y), 20, 180, 20, BLACK);
-
-    EndTextureMode();
-
     BeginDrawing();
     ClearBackground(BLACK);
+    BeginMode2D(camera);
 
     test->draw();
+    test->draw2D();
 
+    DrawText(TextFormat("target X: %f\ttarget Y: %f", camera.target.x, camera.target.y), 20, 180, 20, BLACK);
+    DrawText(TextFormat("offset X: %f\toffset Y: %f", camera.offset.x, camera.offset.y), 20, 220, 20, BLACK);
+
+    EndMode2D();
     EndDrawing();
     //----------------------------------------------------------------------------------
   }
@@ -130,7 +120,6 @@ int main(void)
   UnloadSound(stepsOgg);
 
   // Close window and OpenGL context
-  UnloadRenderTexture(screenCamera);
 
   CloseAudioDevice();
 

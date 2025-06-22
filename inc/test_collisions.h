@@ -34,7 +34,7 @@ private:
 
 Vector2 TestCollisions::getPlayerPosition()
 {
-  return (Vector2){actor->position.x, actor->position.y};
+  return actor->position;
 }
 
 void TestCollisions::update()
