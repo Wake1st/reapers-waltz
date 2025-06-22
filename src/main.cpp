@@ -1,5 +1,6 @@
 #include "raylib.h"
 
+#include "globals.h"
 #include "test_movement.h"
 #include "test_map.h"
 #include "test_collisions.h"
@@ -7,6 +8,7 @@
 #include "test_death.h"
 #include "test_audio.h"
 #include "test_enemy.h"
+#include "test_dialogue.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -15,10 +17,7 @@ int main(void)
 {
   // Initialization
   //--------------------------------------------------------------------------------------
-  const int screenWidth = 1800;
-  const int screenHeight = 850;
-
-  InitWindow(screenWidth, screenHeight, "Reapers Waltz");
+  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Reapers Waltz");
   InitAudioDevice();
 
   SetWindowMonitor(0);
@@ -26,11 +25,12 @@ int main(void)
   // Resource loading
   Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png");
   Texture2D crushyStoneTexture = LoadTexture("resources/Crushy Crushy Stone.png");
+  Texture2D dialogueTexture = LoadTexture("resources/menu_background.png");
 
-  Sound crushWav = LoadSound("resources/ISEKAI - CRUSHER.wav");
-  Sound spikeWav = LoadSound("resources/ISEKAI - SPIKES.wav");
-  Sound deathWav = LoadSound("resources/ISEKAI - Death.wav");
-  Sound stepsWav = LoadSound("resources/ISEKAI - FOOTSTEPS.wav");
+  Sound crushOgg = LoadSound("resources/crushed.ogg");
+  Sound spikeOgg = LoadSound("resources/spiked.ogg");
+  Sound deathOgg = LoadSound("resources/death.ogg");
+  Sound stepsOgg = LoadSound("resources/footsteps.ogg");
 
   // Set our game to run at 60 frames-per-second
   SetTargetFPS(FRAME_RATE);
@@ -57,14 +57,18 @@ int main(void)
   //   crushyStoneTexture : crushyStoneTexture,
   // });
   // TestAudio *test = new TestAudio(TestAudioResources{
-  //   crushed : crushWav,
-  //   spiked : spikeWav,
-  //   death : deathWav,
-  //   footsteps : stepsWav,
+  //   crushed : crushOgg,
+  //   spiked : spikeOgg,
+  //   death : deathOgg,
+  //   footsteps : stepsOgg,
   // });
-  TestEnemy *test = new TestEnemy(TestEnemyResources{
-    enemyTexture : playerTexture,
+  // TestEnemy *test = new TestEnemy(TestEnemyResources{
+  //   enemyTexture : playerTexture,
+  //   playerTexture : playerTexture,
+  // });
+  TestDialogue *test = new TestDialogue(TestDialogueResources{
     playerTexture : playerTexture,
+    background : dialogueTexture,
   });
 
   // Main game loop
@@ -91,11 +95,12 @@ int main(void)
   // Resource unloading
   UnloadTexture(playerTexture);
   UnloadTexture(crushyStoneTexture);
+  UnloadTexture(dialogueTexture);
 
-  UnloadSound(crushWav);
-  UnloadSound(spikeWav);
-  UnloadSound(deathWav);
-  UnloadSound(stepsWav);
+  UnloadSound(crushOgg);
+  UnloadSound(spikeOgg);
+  UnloadSound(deathOgg);
+  UnloadSound(stepsOgg);
 
   // Close window and OpenGL context
   CloseAudioDevice();

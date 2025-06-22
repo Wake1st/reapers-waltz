@@ -1,6 +1,9 @@
 #ifndef GLOBALS
 #define GLOBALS
 
+#define SCREEN_WIDTH 1800
+#define SCREEN_HEIGHT 850
+
 #define FRAME_RATE 60
 
 #define LEVEL_COUNT 1
