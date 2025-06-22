@@ -40,6 +40,7 @@ public:
   }
   void update();
   void setCell(int cell);
+  void setTexture(Texture2D text);
   void move(Command *command);
   bool canMove();
   void draw();
@@ -72,6 +73,11 @@ void Actor::setCell(int cell)
 {
   currentCell = cell;
   position = PositionOfCell(cell);
+}
+
+void Actor::setTexture(Texture2D text)
+{
+  texture = text;
 }
 
 void Actor::move(Command *command)

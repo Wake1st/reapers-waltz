@@ -9,13 +9,18 @@
 #include "actor.h"
 #include "trap.h"
 
-#define TRAP_COUNT 3
+#define TRAP_COUNT 2
 #define ACTOR_START (4 + 10 * MAP_WIDTH)
 
 typedef struct TestDeathResources
 {
   Texture2D playerTexture;
-  Texture2D crushyStoneTexture;
+  Texture2D crushyStoneCleanTexture;
+  Texture2D crushyStoneBloodTexture;
+  Sound crush;
+  Texture2D spikeOpenedTexture;
+  Texture2D spikeClosedTexture;
+  Sound spike;
 } TestDeathResources;
 
 class TestDeath
@@ -26,9 +31,8 @@ public:
     input = new InputHandler();
     actor = new Actor(res.playerTexture, ACTOR_START);
 
-    traps[0] = new Trap(res.crushyStoneTexture, 4 + 4 * MAP_WIDTH);
-    traps[1] = new Trap(res.crushyStoneTexture, 8 + 4 * MAP_WIDTH);
-    traps[2] = new Trap(res.crushyStoneTexture, 12 + 4 * MAP_WIDTH);
+    traps[0] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crush, 4 + 4 * MAP_WIDTH);
+    traps[1] = new SpikeTrap(res.spikeOpenedTexture, res.spikeClosedTexture, res.spike, 8 + 4 * MAP_WIDTH);
   }
 
   void update();

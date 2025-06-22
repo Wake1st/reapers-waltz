@@ -10,7 +10,8 @@
 
 typedef struct TestEnemyResources
 {
-  Texture2D enemyTexture;
+  Texture2D docileTexture;
+  Texture2D hostileTexture;
   Texture2D playerTexture;
 } TestEnemyResources;
 
@@ -29,7 +30,7 @@ public:
         2 + 7 * MAP_WIDTH,
         5 + 5 * MAP_WIDTH,
     };
-    enemy = new Enemy(res.enemyTexture, 5 + 5 * MAP_WIDTH, points);
+    enemy = new Enemy(res.docileTexture, res.hostileTexture, 5 + 5 * MAP_WIDTH, points);
 
     input = new InputHandler();
     player = new Actor(res.playerTexture, 18 + 26 * MAP_WIDTH);

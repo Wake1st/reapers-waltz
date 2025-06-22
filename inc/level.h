@@ -13,7 +13,7 @@
 #include "dialogue.h"
 #include "interactable.h"
 
-#define TRAP_COUNT 3
+#define TRAP_COUNT 9
 #define DIALOGUE_COUNT 7
 
 typedef struct LevelResources
@@ -55,12 +55,18 @@ public:
 
     map = new Map(res.mapRes);
 
-    traps[0] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (4 + 4 * MAP_WIDTH));
-    traps[1] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (8 + 4 * MAP_WIDTH));
-    traps[2] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[2] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[2] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[2] = new Trap(res.crushyStoneCleanTexture, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[0] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (4 + 4 * MAP_WIDTH));
+    traps[1] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (8 + 4 * MAP_WIDTH));
+    traps[2] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[3] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[4] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+
+    traps[5] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[6] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[7] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[8] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[9] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[10] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
 
     std::vector<int> points = {
         FLOOR_SCALE * (7 + 5 * MAP_WIDTH),
@@ -71,6 +77,7 @@ public:
     enemy = new Enemy(res.enemyTexture, FLOOR_SCALE * (5 + 5 * MAP_WIDTH), points);
 
     dialogue = new Dialogue(res.background);
+
     orbs[0] = new Interactable(FLOOR_SCALE * (5 + 5 * MAP_WIDTH), "Interaction tutorials!");
     orbs[1] = new Interactable(FLOOR_SCALE * (14 + 4 * MAP_WIDTH), "Dear Diary, We're fucked.");
     orbs[2] = new Interactable(FLOOR_SCALE * (24 + 17 * MAP_WIDTH), "I'm the death god - I hope you suffer.");

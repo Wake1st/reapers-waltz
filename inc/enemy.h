@@ -25,12 +25,15 @@ typedef enum EnemyState
 class Enemy
 {
 public:
-  Enemy(Texture2D texture, int startCell, std::vector<int> points)
+  Enemy(Texture2D docTexture, Texture2D hosTexture, int startCell, std::vector<int> points)
   {
-    patrolPoints = points;
-    actor = new Actor(texture, startCell, ENEMY_SPEED);
+    docileTexture = docTexture;
+    hostileTexture = hosTexture;
 
     state = EnemyState::IDLE;
+    actor = new Actor(docileTexture, startCell, ENEMY_SPEED);
+
+    patrolPoints = points;
     idleTimer = IDLE_TIME;
   }
   void setCell(int cell);
@@ -42,6 +45,9 @@ public:
   void draw();
 
 private:
+  Texture2D docileTexture;
+  Texture2D hostileTexture;
+
   EnemyState state;
   Actor *actor;
 
@@ -77,6 +83,7 @@ bool Enemy::checkPursuit(Actor *check)
     targetCell = check->currentCell;
     target = PositionOfCell(targetCell);
     state = EnemyState::PURSUIT;
+    actor->setTexture(hostileTexture);
     return true;
   }
 
@@ -116,6 +123,7 @@ void Enemy::update()
 
       // update state
       state = EnemyState::PATROL;
+      actor->setTexture(docileTexture);
       // printf(TextFormat("\n\n -- setting state: %i", state));
     }
 
