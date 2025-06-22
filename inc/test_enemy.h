@@ -46,7 +46,6 @@ private:
 
 void TestEnemy::update()
 {
-  // printf("\nupdate...");
   if (GameState::active == GameStates::DEATH)
   {
     // reset actors
@@ -63,7 +62,6 @@ void TestEnemy::update()
     Command command = input->handleInput();
     if (command)
     {
-      // printf("\n - - commanded");
       player->move(&command);
     }
 
@@ -72,7 +70,6 @@ void TestEnemy::update()
     {
       if (enemy->checkCaught())
       {
-        // printf("\n - - caught");
         GameState::active = GameStates::DEATH;
         player->isFrozen = true;
       }
@@ -89,7 +86,6 @@ void TestEnemy::update()
     player->update();
   }
 
-  // printf("\n - - enemy update");
   enemy->update();
 }
 

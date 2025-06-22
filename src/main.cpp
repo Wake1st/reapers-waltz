@@ -1,6 +1,8 @@
 #include "raylib.h"
 
 #include "globals.h"
+#include "level.h"
+
 #include "test_movement.h"
 #include "test_map.h"
 #include "test_collisions.h"
@@ -23,7 +25,18 @@ int main(void)
 
   // Resource loading
   Texture2D playerTexture = LoadTexture("resources/pc_sprite_sheet.png");
-  Texture2D crushyStoneTexture = LoadTexture("resources/Crushy Crushy Stone.png");
+  Texture2D enemyBlueNonTexture = LoadTexture("resources/Enemy_blue_evil_non-hos.png");
+  Texture2D enemyBlueHosTexture = LoadTexture("resources/Enemy_blue_evil.png");
+  Texture2D enemyPinkNonTexture = LoadTexture("resources/Enemy_pink_evil_non-hos.png");
+  Texture2D enemyPinkHosTexture = LoadTexture("resources/Enemy_pink_evil.png");
+
+  Texture2D crushyStoneCleanTexture = LoadTexture("resources/Crushy Crushy Stone.png");
+  Texture2D crushyStoneBloodTexture = LoadTexture("resources/Curshy_crushy_stone_w_blood.png");
+  Texture2D spikeHolesTexture = Load("resources/Spike_Holes.png");
+  Texture2D spikeHalfTexture = Load("resources/Spike_Half.png");
+  Texture2D spikeOutBloodTexture = Load("resources/Spike_Out_Blood.png");
+  Texture2D groundTexture = Load("resources/Ground_Tile.png");
+
   Texture2D dialogueTexture = LoadTexture("resources/menu_background.png");
 
   Sound crushOgg = LoadSound("resources/crushed.ogg");
@@ -50,14 +63,14 @@ int main(void)
   //   wallTexture : playerTexture,
   //   floorTexture : playerTexture,
   // }});
-  TestCollisions *test = new TestCollisions(TestCollisionsResources{
-    playerTexture : playerTexture,
-    startCell : startCell,
-    mapRes : MapResources{
-      wallTexture : playerTexture,
-      floorTexture : playerTexture,
-    }
-  });
+  // TestCollisions *test = new TestCollisions(TestCollisionsResources{
+  //   playerTexture : playerTexture,
+  //   startCell : startCell,
+  //   mapRes : MapResources{
+  //     wallTexture : playerTexture,
+  //     floorTexture : playerTexture,
+  //   }
+  // });
   // TestAnimations *test = new TestAnimations(TestAnimationResources{
   //   playerTexture : playerTexture,
   // });
@@ -79,6 +92,25 @@ int main(void)
   //   playerTexture : playerTexture,
   //   background : dialogueTexture,
   // });
+
+  Level *level = new Level(LevelResources{
+    playerTexture : playerTexture,
+    startCell : startCell,
+    enemyBlueNTexture : enemyBlueNonTexture,
+    enemyBlueHTexture : enemyBlueHosTexture,
+    enemyPinkNTexture : enemyPinkNonTexture,
+    enemyPinkHTexture : enemyPinkHosTexture,
+    crushyStoneCleanTexture : crushyStoneCleanTexture,
+    crushyStoneBloodTexture : crushyStoneBloodTexture,
+    spikesEmptyTexture : spikeHolesTexture,
+    spikesHalfTexture : spikeHalfTexture,
+    spikesFullTexture : spikeOutBloodTexture,
+    mapRes : MapResources{
+      wallTexture : playerTexture,
+      floorTexture : groundTexture,
+    },
+    dialogueBackground : dialogueTexture,
+  });
 
   // Main game loop
   while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -111,7 +143,18 @@ int main(void)
   //--------------------------------------------------------------------------------------
   // Resource unloading
   UnloadTexture(playerTexture);
-  UnloadTexture(crushyStoneTexture);
+  UnloadTexture(enemyBlueNonTexture);
+  UnloadTexture(enemyBlueHosTexture);
+  UnloadTexture(enemyPinkNonTexture);
+  UnloadTexture(enemyPinkHosTexture);
+
+  UnloadTexture(crushyStoneCleanTexture);
+  UnloadTexture(crushyStoneBloodTexture);
+  UnloadTexture(spikeHolesTexture);
+  UnloadTexture(spikeHalfTexture);
+  UnloadTexture(spikeOutBloodTexture);
+  UnloadTexture(groundTexture);
+
   UnloadTexture(dialogueTexture);
 
   UnloadSound(crushOgg);

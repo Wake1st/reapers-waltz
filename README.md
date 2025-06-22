@@ -55,6 +55,7 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
   - [ ] tapestry of death
 - [ ] cutscene
 - [x] moving camera
+- [ ] lighting
 
 
 ## Schedule
@@ -62,5 +63,5 @@ Submission for the [Isekai Horror Jam](https://itch.io/jam/isekai-horror-jam) 20
 - [x] Day 1: character movement, tiles, rooms, map, collisions
 - [x] Day 2: collisions, animations
 - [x] Day 3: triggers, death
-- [ ] Day 4: traps, enemy AI, sounds, dialogue, floorplan, camera follow, publish itch, UI
+- [ ] Day 4: traps, enemy AI, sounds, dialogue, floorplan, camera follow, build level, publish itch, UI
 - [ ] Day 5: cutscene, achievements, scene swapping, dungeon generator
