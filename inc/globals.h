@@ -8,8 +8,9 @@
 
 #define LEVEL_COUNT 1
 
-#define MAP_WIDTH 180
-#define MAP_HEIGHT 80
+#define FLOOR_SCALE 3.f
+#define MAP_WIDTH 600
+#define MAP_HEIGHT 400
 #define MAP_SIZE (MAP_WIDTH * MAP_HEIGHT)
 
 #define CELL_SIZE 32.f

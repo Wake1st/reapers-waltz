@@ -36,7 +36,7 @@ int main(void)
 
   //---------------------------------------------------------------------------------------
 
-  int startCell = (OUTER_BUFFER + 3) + (OUTER_BUFFER + 3) * MAP_WIDTH;
+  int startCell = FLOOR_SCALE * ((OUTER_BUFFER + 3) + (OUTER_BUFFER + 3) * MAP_WIDTH);
   Vector2 playerStart = PositionOfCell(startCell);
 
   Camera2D camera = {0};

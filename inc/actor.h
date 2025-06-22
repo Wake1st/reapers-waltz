@@ -8,7 +8,7 @@
 
 #include "globals.h"
 
-#define SPEED 115.f
+#define SPEED 615.f
 
 #define FRAME_SPEED 4
 #define FRAMES 4
