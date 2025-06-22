@@ -13,7 +13,7 @@
 #include "dialogue.h"
 #include "interactable.h"
 
-#define TRAP_COUNT 9
+#define TRAP_COUNT 10
 #define DIALOGUE_COUNT 7
 
 typedef struct LevelResources
@@ -55,18 +55,17 @@ public:
 
     map = new Map(res.mapRes);
 
-    traps[0] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (4 + 4 * MAP_WIDTH));
-    traps[1] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (8 + 4 * MAP_WIDTH));
-    traps[2] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[3] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[4] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[0] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (30 + 12 * MAP_WIDTH));
+    traps[1] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (40 + 8 * MAP_WIDTH));
+    traps[2] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (38 + 14 * MAP_WIDTH));
+    traps[3] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (34 + 11 * MAP_WIDTH));
+    traps[4] = new CrushTrap(res.crushyStoneCleanTexture, res.crushyStoneBloodTexture, res.crushed, FLOOR_SCALE * (58 + 10 * MAP_WIDTH));
 
-    traps[5] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[6] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[7] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[8] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[9] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
-    traps[10] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (12 + 4 * MAP_WIDTH));
+    traps[5] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (34 + 26 * MAP_WIDTH));
+    traps[6] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (41 + 24 * MAP_WIDTH));
+    traps[7] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (32 + 30 * MAP_WIDTH));
+    traps[8] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (28 + 46 * MAP_WIDTH));
+    traps[9] = new SpikeTrap(res.spikesEmptyTexture, res.spikesFullTexture, res.spiked, FLOOR_SCALE * (50 + 38 * MAP_WIDTH));
 
     std::vector<int> points = {
         FLOOR_SCALE * (7 + 5 * MAP_WIDTH),
