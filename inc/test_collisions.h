@@ -8,6 +8,7 @@
 typedef struct TestCollisionsResources
 {
   Texture2D playerTexture;
+  int startCell;
   MapResources mapRes;
 } TestCollisionsResources;
 
@@ -17,17 +18,24 @@ public:
   TestCollisions(TestCollisionsResources res)
   {
     input = new InputHandler();
-    actor = new Actor(res.playerTexture, OUTER_BUFFER + 2 + (OUTER_BUFFER + 1) * MAP_WIDTH);
+    actor = new Actor(res.playerTexture, res.startCell);
     map = new Map(res.mapRes);
   }
   void update();
   void draw();
+  void draw2D();
+  Vector2 getPlayerPosition();
 
 private:
   InputHandler *input;
   Actor *actor;
   Map *map;
 };
+
+Vector2 TestCollisions::getPlayerPosition()
+{
+  return (Vector2){actor->position.x, actor->position.y};
+}
 
 void TestCollisions::update()
 {
@@ -49,11 +57,16 @@ void TestCollisions::draw()
   map->draw();
   actor->draw();
 
-  std::vector<Tile *> tiles = map->getNeighbors(actor->currentCell);
-  for (int i = 0; i < 8; i++)
-  {
-    DrawText(TextFormat("tile pos x: %f\ttile pos y: %f\tcell: %i", tiles[i]->position.x, tiles[i]->position.x, i), 20, 100 + i * 40, 40, BLACK);
-  }
+  // std::vector<Tile *> tiles = map->getNeighbors(actor->currentCell);
+  // for (int i = 0; i < 8; i++)
+  // {
+  //   DrawText(TextFormat("tile pos x: %f\ttile pos y: %f\tcell: %i", tiles[i]->position.x, tiles[i]->position.x, i), 20, 100 + i * 40, 40, BLACK);
+  // }
+}
+
+void TestCollisions::draw2D()
+{
+  actor->draw2D();
 }
 
 #endif

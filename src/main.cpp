@@ -37,18 +37,30 @@ int main(void)
 
   //---------------------------------------------------------------------------------------
 
+  int startCell = (OUTER_BUFFER + 3) + (OUTER_BUFFER + 3) * MAP_WIDTH;
+  Vector2 playerStart = PositionOfCell(startCell);
+
+  Camera2D camera = {0};
+  camera.target = (Vector2){playerStart.x, playerStart.y};
+  camera.offset = (Vector2){SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f};
+  camera.rotation = 0.0f;
+  camera.zoom = 1.0f;
+
+  RenderTexture screenCamera = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
+
   // TestMovement *test = new TestMovement(TestMovementResources{texture : playerTexture});
   // TestMap *test = new TestMap(TestMapResources{mapRes : MapResources{
   //   wallTexture : playerTexture,
   //   floorTexture : playerTexture,
   // }});
-  // TestCollisions *test = new TestCollisions(TestCollisionsResources{
-  //   playerTexture : playerTexture,
-  //   mapRes : MapResources{
-  //     wallTexture : playerTexture,
-  //     floorTexture : playerTexture,
-  //   }
-  // });
+  TestCollisions *test = new TestCollisions(TestCollisionsResources{
+    playerTexture : playerTexture,
+    startCell : startCell,
+    mapRes : MapResources{
+      wallTexture : playerTexture,
+      floorTexture : playerTexture,
+    }
+  });
   // TestAnimations *test = new TestAnimations(TestAnimationResources{
   //   playerTexture : playerTexture,
   // });
@@ -66,10 +78,10 @@ int main(void)
   //   enemyTexture : playerTexture,
   //   playerTexture : playerTexture,
   // });
-  TestDialogue *test = new TestDialogue(TestDialogueResources{
-    playerTexture : playerTexture,
-    background : dialogueTexture,
-  });
+  // TestDialogue *test = new TestDialogue(TestDialogueResources{
+  //   playerTexture : playerTexture,
+  //   background : dialogueTexture,
+  // });
 
   // Main game loop
   while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -78,10 +90,25 @@ int main(void)
     //----------------------------------------------------------------------------------
     test->update();
 
+    camera.target = test->getPlayerPosition();
+
     // Draw
     //----------------------------------------------------------------------------------
-    BeginDrawing();
 
+    BeginTextureMode(screenCamera);
+    ClearBackground(BLACK);
+
+    BeginMode2D(camera);
+
+    test->draw2D();
+
+    EndMode2D();
+
+    DrawText(TextFormat("target X: %f\ttarget Y: %f", camera.target.x, camera.target.y), 20, 180, 20, BLACK);
+
+    EndTextureMode();
+
+    BeginDrawing();
     ClearBackground(BLACK);
 
     test->draw();
@@ -103,6 +130,8 @@ int main(void)
   UnloadSound(stepsOgg);
 
   // Close window and OpenGL context
+  UnloadRenderTexture(screenCamera);
+
   CloseAudioDevice();
 
   CloseWindow();

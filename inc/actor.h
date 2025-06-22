@@ -43,6 +43,7 @@ public:
   void move(Command *command);
   bool canMove();
   void draw();
+  void draw2D();
 
 private:
   Texture2D texture;
@@ -127,10 +128,14 @@ void Actor::move(Command *command)
 
 void Actor::draw()
 {
-  DrawTextureRec(texture, frameRec, position - offset, WHITE);
-  DrawRectangleLines(position.x, position.y, CELL_SIZE, CELL_SIZE, LIME);
-
   DrawText(TextFormat("pos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell), 20, 20, 40, WHITE);
+
+  DrawRectangleLines(position.x, position.y, CELL_SIZE, CELL_SIZE, LIME);
+}
+
+void Actor::draw2D()
+{
+  DrawTextureRec(texture, frameRec, position - offset, WHITE);
 }
 
 void Actor::animate()

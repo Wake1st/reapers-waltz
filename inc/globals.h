@@ -14,7 +14,7 @@
 
 #define CELL_SIZE 32.f
 #define HALF_CELL 16.f
-#define OUTER_BUFFER 4.f
+#define OUTER_BUFFER 14.f
 
 #define DIAGONAL 0.7071
 
