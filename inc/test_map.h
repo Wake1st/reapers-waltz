@@ -28,7 +28,7 @@ void TestMap::update()
 
 void TestMap::draw()
 {
-  map->draw();
+  map->draw2D();
 }
 
 #endif

@@ -7,17 +7,23 @@ typedef enum DeathTypes
 {
   CRUSHED,
   SPIKED,
-  PIT
+  CAUGHT,
 } DeathTypes;
 
 class Death
 {
 public:
-  void add(DeathTypes deathType);
-  bool allDead();
+  static void add(DeathTypes deathType);
+  static bool allDead();
 
 private:
-  std::unordered_map<DeathTypes, bool> deaths;
+  static std::unordered_map<DeathTypes, bool> deaths;
+};
+
+std::unordered_map<DeathTypes, bool> Death::deaths = {
+    {DeathTypes::CRUSHED, false},
+    {DeathTypes::SPIKED, false},
+    {DeathTypes::CAUGHT, false},
 };
 
 void Death::add(DeathTypes deathType)
@@ -25,12 +31,12 @@ void Death::add(DeathTypes deathType)
   deaths[deathType] = true;
 }
 
-bool allDead()
+bool Death::allDead()
 {
   return (
       (deaths[DeathTypes::CRUSHED]) &&
       (deaths[DeathTypes::SPIKED]) &&
-      (deaths[DeathTypes::PIT]));
+      (deaths[DeathTypes::CAUGHT]));
 }
 
 #endif

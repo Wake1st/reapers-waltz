@@ -41,9 +41,12 @@ public:
         }
       }
     }
+
+    floorTexture = res.floorTexture;
+    wallTexture = res.wallTexture;
   }
   void update();
-  void draw();
+  void draw2D();
   std::vector<Tile *> getNeighbors(int cell);
 
 private:
@@ -52,14 +55,15 @@ private:
   Texture2D floorTexture;
 };
 
-void Map::draw()
+void Map::draw2D()
 {
   for (Tile *tile : tiles)
   {
     if (tile->isWall)
-      DrawRectangle(tile->position.x, tile->position.y, CELL_SIZE, CELL_SIZE, LIME);
+      DrawRectangle(tile->position.x, tile->position.y, CELL_SIZE, CELL_SIZE, BLACK);
     else
-      DrawRectangle(tile->position.x, tile->position.y, CELL_SIZE, CELL_SIZE, DARKGRAY);
+      DrawTextureEx(floorTexture, tile->position, 0.f, 1.0f, WHITE);
+    // DrawRectangle(tile->position.x, tile->position.y, CELL_SIZE, CELL_SIZE, DARKGRAY);
   }
 }
 

@@ -43,6 +43,7 @@ public:
   bool checkCaught();
   void update();
   void draw();
+  void draw2D();
 
 private:
   Texture2D docileTexture;
@@ -165,11 +166,14 @@ void Enemy::update()
 
 void Enemy::draw()
 {
-  actor->draw();
-
   DrawText(TextFormat("state: %i", state), 20, 100, 20, WHITE);
   DrawText(TextFormat("target x: %f\ttarget y: %f", target.x, target.y), 20, 140, 20, WHITE);
   DrawText(TextFormat("actor: %i\ttarget: %i", actor->currentCell, targetCell), 20, 180, 20, WHITE);
+}
+
+void Enemy::draw2D()
+{
+  actor->draw2D();
 }
 
 Command Enemy::getCommand()

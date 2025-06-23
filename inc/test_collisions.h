@@ -54,18 +54,18 @@ void TestCollisions::update()
 
 void TestCollisions::draw()
 {
-  map->draw();
   actor->draw();
 
   // std::vector<Tile *> tiles = map->getNeighbors(actor->currentCell);
   // for (int i = 0; i < 8; i++)
   // {
-  //   DrawText(TextFormat("tile pos x: %f\ttile pos y: %f\tcell: %i", tiles[i]->position.x, tiles[i]->position.x, i), 20, 100 + i * 40, 40, BLACK);
+  //   DrawText(TextFormat("tile pos x: %f\ttile pos y: %f\tcell: %i", tiles[i]->position.x, tiles[i]->position.x, i), 20, 100 + i * 40, 40, WHITE);
   // }
 }
 
 void TestCollisions::draw2D()
 {
+  map->draw2D();
   actor->draw2D();
 }
 

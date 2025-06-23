@@ -8,7 +8,7 @@ typedef enum GameStates
   SETUP,  // initial setup
   PLAY,   // active playing
   PAUSE,  // pause menu
-  DEATH,  // death animations
+  LOOSE,  // death animations
   FINALE, // final sequence
   OUTRO,  // exiting cinematic?
   END,    // fin, credits

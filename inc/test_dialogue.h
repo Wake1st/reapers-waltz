@@ -10,7 +10,7 @@
 #include "dialogue.h"
 #include "interactable.h"
 
-#define DIALOGUE_COUNT 2
+#define TEST_DIALOGUE_COUNT 2
 
 typedef struct TestDialogueResources
 {
@@ -38,7 +38,7 @@ private:
   Actor *actor;
 
   Dialogue *dialogue;
-  Interactable *orbs[DIALOGUE_COUNT];
+  Interactable *orbs[TEST_DIALOGUE_COUNT];
 };
 
 void TestDialogue::update()
@@ -77,10 +77,10 @@ void TestDialogue::draw()
 {
   for (Interactable *orb : orbs)
   {
-    orb->draw();
+    orb->draw2D();
   }
 
-  actor->draw();
+  actor->draw2D();
   dialogue->draw();
 }
 

@@ -26,9 +26,10 @@ public:
     cell = cellIndex;
     position = PositionOfCell(cellIndex);
   }
-  virtual void activate(bool value);
-  virtual void update();
-  virtual void draw();
+  virtual void activate(bool value) = 0;
+  virtual void update() = 0;
+  virtual void draw() = 0;
+  virtual void draw2D() = 0;
 
 protected:
   Texture2D openedTexture;
@@ -50,6 +51,7 @@ public:
   void activate(bool value) override;
   void update() override;
   void draw() override;
+  void draw2D() override;
 
 private:
   Vector2 offset;
@@ -71,8 +73,8 @@ void CrushTrap::update()
       isOpen = false;
       offset.y = 32.f;
 
-      // play sounds
       PlaySound(sound);
+      Death::add(DeathTypes::CRUSHED);
     }
   }
 }
@@ -81,7 +83,10 @@ void CrushTrap::draw()
 {
   // trigger area
   DrawRectangle(position.x, position.y, CELL_SIZE, CELL_SIZE, RED);
+}
 
+void CrushTrap::draw2D()
+{
   if (isActive)
   {
     if (isOpen)
@@ -101,6 +106,7 @@ public:
   void activate(bool value) override;
   void update() override;
   void draw() override;
+  void draw2D() override;
 
 private:
   float timer;
@@ -121,8 +127,8 @@ void SpikeTrap::update()
     {
       isOpen = false;
 
-      // play sounds
       PlaySound(sound);
+      Death::add(DeathTypes::SPIKED);
     }
   }
 }
@@ -130,14 +136,17 @@ void SpikeTrap::update()
 void SpikeTrap::draw()
 {
   // trigger area
-  DrawRectangle(position.x, position.y, CELL_SIZE, CELL_SIZE, RED);
+  // DrawRectangle(position.x, position.y, CELL_SIZE, CELL_SIZE, RED);
+}
 
+void SpikeTrap::draw2D()
+{
   if (isActive)
   {
     if (isOpen)
-      DrawTextureEx(openedTexture, Vector2Subtract(position, offset), 0.f, SPIKE_SCALE, WHITE);
+      DrawTextureEx(openedTexture, position, 0.f, SPIKE_SCALE, WHITE);
     else
-      DrawTextureEx(closedTexture, Vector2Subtract(position, offset), 0.f, SPIKE_SCALE, WHITE);
+      DrawTextureEx(closedTexture, position, 0.f, SPIKE_SCALE, WHITE);
   }
 }
 

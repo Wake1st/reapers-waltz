@@ -8,7 +8,7 @@
 
 #include "globals.h"
 
-#define SPEED 615.f
+#define SPEED 135.f
 
 #define FRAME_SPEED 4
 #define FRAMES 4
@@ -126,6 +126,7 @@ void Actor::move(Command *command)
   }
 
   position += Vector2Scale(direction, speed * GetFrameTime());
+  // printf(TextFormat("\tpos x: %f\tpos y: %f\tcurrent cell: %i", position.x, position.y, currentCell));
 
   // update current cell
   Vector2 center = {(position.x + HALF_CELL), (position.y + HALF_CELL)};

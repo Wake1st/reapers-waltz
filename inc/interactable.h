@@ -25,6 +25,7 @@ public:
   bool checkActive(int checkCell);
   const char *getText();
   void draw();
+  void draw2D();
 
 private:
   // Texture2D texture;
@@ -47,12 +48,15 @@ const char *Interactable::getText()
 
 void Interactable::draw()
 {
-  DrawCircle(position.x + CELL_SIZE / 2.f, position.y + CELL_SIZE / 2.f, ORB_RADIUS, YELLOW);
-
   if (active)
   {
     DrawText("Press 'X' to open dialogue.", SCREEN_WIDTH / 2.f - TEXT_OFFSET_X, SCREEN_HEIGHT - TEXT_OFFSET_Y, 40, WHITE);
   }
+}
+
+void Interactable::draw2D()
+{
+  DrawCircle(position.x + CELL_SIZE / 2.f, position.y + CELL_SIZE / 2.f, ORB_RADIUS, YELLOW);
 }
 
 #endif

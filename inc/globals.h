@@ -8,7 +8,7 @@
 
 #define LEVEL_COUNT 1
 
-#define FLOOR_SCALE 3.f
+#define FLOOR_SCALE 3
 #define MAP_WIDTH 600
 #define MAP_HEIGHT 400
 #define MAP_SIZE (MAP_WIDTH * MAP_HEIGHT)

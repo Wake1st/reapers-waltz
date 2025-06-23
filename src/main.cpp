@@ -32,24 +32,24 @@ int main(void)
 
   Texture2D crushyStoneCleanTexture = LoadTexture("resources/Crushy Crushy Stone.png");
   Texture2D crushyStoneBloodTexture = LoadTexture("resources/Curshy_crushy_stone_w_blood.png");
-  Texture2D spikeHolesTexture = Load("resources/Spike_Holes.png");
-  Texture2D spikeHalfTexture = Load("resources/Spike_Half.png");
-  Texture2D spikeOutBloodTexture = Load("resources/Spike_Out_Blood.png");
-  Texture2D groundTexture = Load("resources/Ground_Tile.png");
+  Texture2D spikeHolesTexture = LoadTexture("resources/Spike_Holes.png");
+  Texture2D spikeHalfTexture = LoadTexture("resources/Spike_Half.png");
+  Texture2D spikeOutBloodTexture = LoadTexture("resources/Spike_Out_Blood.png");
+  Texture2D groundTexture = LoadTexture("resources/Ground_Tile_32.png");
 
   Texture2D dialogueTexture = LoadTexture("resources/menu_background.png");
 
+  Sound stepsOgg = LoadSound("resources/footsteps.ogg");
   Sound crushOgg = LoadSound("resources/crushed.ogg");
   Sound spikeOgg = LoadSound("resources/spiked.ogg");
   Sound deathOgg = LoadSound("resources/death.ogg");
-  Sound stepsOgg = LoadSound("resources/footsteps.ogg");
 
   // Set our game to run at 60 frames-per-second
   SetTargetFPS(FRAME_RATE);
 
   //---------------------------------------------------------------------------------------
 
-  int startCell = FLOOR_SCALE * ((OUTER_BUFFER + 3) + (OUTER_BUFFER + 3) * MAP_WIDTH);
+  int startCell = FLOOR_SCALE * ((OUTER_BUFFER + 2) + (OUTER_BUFFER + 5) * MAP_WIDTH);
   Vector2 playerStart = PositionOfCell(startCell);
 
   Camera2D camera = {0};
@@ -85,7 +85,8 @@ int main(void)
   //   footsteps : stepsOgg,
   // });
   // TestEnemy *test = new TestEnemy(TestEnemyResources{
-  //   enemyTexture : playerTexture,
+  //   docileTexture : enemyBlueNonTexture,
+  //   hostileTexture : enemyBlueHosTexture,
   //   playerTexture : playerTexture,
   // });
   // TestDialogue *test = new TestDialogue(TestDialogueResources{
@@ -105,6 +106,10 @@ int main(void)
     spikesEmptyTexture : spikeHolesTexture,
     spikesHalfTexture : spikeHalfTexture,
     spikesFullTexture : spikeOutBloodTexture,
+    footsteps : stepsOgg,
+    crushed : crushOgg,
+    spiked : spikeOgg,
+    caught : deathOgg,
     mapRes : MapResources{
       wallTexture : playerTexture,
       floorTexture : groundTexture,
@@ -117,10 +122,10 @@ int main(void)
   {
     // Update
     //----------------------------------------------------------------------------------
-    test->update();
+    level->update();
 
-    camera.offset = (Vector2){SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f};
-    camera.target = test->getPlayerPosition();
+    camera.target = level->getPlayerPosition();
+    // printf(TextFormat("\n camera | target X: %f\ttarget Y: %f", camera.target.x, camera.target.y));
 
     // Draw
     //----------------------------------------------------------------------------------
@@ -128,13 +133,13 @@ int main(void)
     ClearBackground(BLACK);
     BeginMode2D(camera);
 
-    test->draw();
-    test->draw2D();
-
-    DrawText(TextFormat("target X: %f\ttarget Y: %f", camera.target.x, camera.target.y), 20, 180, 20, BLACK);
-    DrawText(TextFormat("offset X: %f\toffset Y: %f", camera.offset.x, camera.offset.y), 20, 220, 20, BLACK);
+    level->draw2D();
 
     EndMode2D();
+
+    level->draw();
+    // DrawText(TextFormat("target X: %f\ttarget Y: %f", camera.target.x, camera.target.y), 20, 180, 20, WHITE);
+
     EndDrawing();
     //----------------------------------------------------------------------------------
   }

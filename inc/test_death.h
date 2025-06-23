@@ -9,7 +9,7 @@
 #include "actor.h"
 #include "trap.h"
 
-#define TRAP_COUNT 2
+#define TEST_TRAP_COUNT 2
 #define ACTOR_START (4 + 10 * MAP_WIDTH)
 
 typedef struct TestDeathResources
@@ -42,18 +42,18 @@ private:
   InputHandler *input;
   Actor *actor;
 
-  Trap *traps[TRAP_COUNT];
+  Trap *traps[TEST_TRAP_COUNT];
 };
 
 void TestDeath::update()
 {
-  if (GameState::active == GameStates::DEATH)
+  if (GameState::active == GameStates::LOOSE)
   {
     // create new actor
     actor->setCell(ACTOR_START);
 
     // reset traps
-    for (int i = 0; i < TRAP_COUNT; i++)
+    for (int i = 0; i < TEST_TRAP_COUNT; i++)
     {
       traps[i]->activate(false);
     }
@@ -71,11 +71,11 @@ void TestDeath::update()
     }
 
     // check for traps
-    for (int i = 0; i < TRAP_COUNT; i++)
+    for (int i = 0; i < TEST_TRAP_COUNT; i++)
     {
       if (actor->currentCell == traps[i]->cell)
       {
-        GameState::setState(GameStates::DEATH);
+        GameState::setState(GameStates::LOOSE);
         traps[i]->activate(true);
         actor->isFrozen = true;
       }
@@ -89,7 +89,7 @@ void TestDeath::draw()
 {
   actor->draw();
 
-  for (int i = 0; i < TRAP_COUNT; i++)
+  for (int i = 0; i < TEST_TRAP_COUNT; i++)
   {
     traps[i]->draw();
   }

@@ -47,7 +47,7 @@ private:
 
 void TestEnemy::update()
 {
-  if (GameState::active == GameStates::DEATH)
+  if (GameState::active == GameStates::LOOSE)
   {
     // reset actors
     player->setCell(18 + 26 * MAP_WIDTH);
@@ -71,7 +71,7 @@ void TestEnemy::update()
     {
       if (enemy->checkCaught())
       {
-        GameState::active = GameStates::DEATH;
+        GameState::active = GameStates::LOOSE;
         player->isFrozen = true;
       }
       else if (!enemy->checkPursuit(player))
