@@ -17,7 +17,7 @@ TARGET				:= $(BIN_DIR)/program
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $^ -o $@ -Lraylib
+	$(CXX) $^ -o $@ -L -lraylib
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDEFLAGS) -c $< -o $@
